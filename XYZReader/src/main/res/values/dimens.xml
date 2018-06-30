@@ -8,4 +8,10 @@
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
 
+    <dimen name="sheet_text_scrim_height_top">88dp</dimen>
+    <dimen name="sheet_text_scrim_height_bottom">88dp</dimen>
+    <dimen name="app_bar_height">300dp</dimen>
+
+    <dimen name="detail_body_margin">8dp</dimen>
+
 </resources>
