@@ -19,6 +19,7 @@ This project gives me an opportunity to improve an app’s design, a vital skill
 [Udacity XYZ reader starter code](https://github.com/udacity/xyz-reader-starter-code)
 
 ### Screenshots
+
 Article list. Portrait
 
 <img src="https://github.com/Yahhi/udacity-xyz-reader/blob/yahhi_editio/images/old-port-main.png" height="400" />
@@ -78,3 +79,29 @@ Article details. Portrait
 Article details. Landscape
 
 <img src="https://github.com/Yahhi/udacity-xyz-reader/blob/yahhi_editio/images/new-land-detail.png" width="400" />
+
+# License
+
+```
+MIT License
+
+Copyright (c) 2018 Valentina Konjukhova
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
