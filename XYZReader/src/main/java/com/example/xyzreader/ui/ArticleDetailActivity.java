@@ -88,8 +88,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void setTitleAppearance(String title, String imageAddress) {
-        //toolbar.setTitle(title);
+    public void setTitleAppearance(String imageAddress) {
         if (imageAddress != null && !imageAddress.equals("")) {
             ImageLoaderHelper.getInstance(this).getImageLoader()
                     .get(imageAddress, new ImageLoader.ImageListener() {
@@ -97,15 +96,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
                             if (bitmap != null) {
-                            /*Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-                                @Override
-                                public void onGenerated(@NonNull Palette palette) {
-                                    mMutedColor = palette.getDominantColor(
-                                            ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                                    mRootView.findViewById(R.id.meta_bar)
-                                            .setBackgroundColor(mMutedColor);
-                                }
-                            });*/
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
                             }
                         }

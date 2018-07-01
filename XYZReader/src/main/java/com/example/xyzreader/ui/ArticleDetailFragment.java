@@ -163,14 +163,15 @@ public class ArticleDetailFragment extends Fragment implements
             }
             bodyView.loadData(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />"),  "text/html", "UTF-8");
             String imageAddress = mCursor.getString(ArticleLoader.Query.PHOTO_URL);
+            String thumbURL = mCursor.getString(ArticleLoader.Query.THUMB_URL);
 
-            ((ArticleDetailActivity) requireActivity()).setTitleAppearance(title, imageAddress);
-            TextView articleTitleView = mRootView.findViewById(R.id.article_title);
+            ((ArticleDetailActivity) requireActivity()).setTitleAppearance(imageAddress);
+            final TextView articleTitleView = mRootView.findViewById(R.id.article_title);
             articleTitleView.setText(title);
-            TextView articleBylineView = mRootView.findViewById(R.id.article_byline);
+            final TextView articleBylineView = mRootView.findViewById(R.id.article_byline);
             articleBylineView.setText(date);
-            /*ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
+            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
+                    .get(thumbURL, new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
@@ -179,12 +180,20 @@ public class ArticleDetailFragment extends Fragment implements
                                     @Override
                                     public void onGenerated(@NonNull Palette palette) {
                                         mMutedColor = palette.getDominantColor(
-                                                ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                                                ContextCompat.getColor(requireContext(), R.color.colorSecondaryDark));
                                         mRootView.findViewById(R.id.meta_bar)
                                                 .setBackgroundColor(mMutedColor);
+                                        int mContrastColor = Color.rgb(255-Color.red(mMutedColor),
+                                                255-Color.green(mMutedColor),
+                                                255-Color.blue(mMutedColor));
+                                        if (mMutedColor != mContrastColor) {
+                                            articleTitleView.setTextColor(mContrastColor);
+                                            articleBylineView.setTextColor(mContrastColor);
+                                        }
                                     }
                                 });
-                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
+                                ImageView smallImage = mRootView.findViewById(R.id.article_thumb);
+                                smallImage.setImageBitmap(bitmap);
                             }
                         }
 
@@ -192,10 +201,9 @@ public class ArticleDetailFragment extends Fragment implements
                         public void onErrorResponse(VolleyError volleyError) {
 
                         }
-                    });*/
+                    });
         } else {
             mRootView.setVisibility(View.GONE);
-            //((ArticleDetailActivity) requireActivity()).setTitleAppearance("N/A", "N/A", "");
             bodyView.loadData("N/A", null, null);
         }
     }

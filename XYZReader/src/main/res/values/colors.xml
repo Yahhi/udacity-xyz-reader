@@ -30,4 +30,6 @@
     <color name="translucent_scrim_top_center">#2d000000</color>
     <color name="translucent_scrim_bottom">#7d000000</color>
     <color name="translucent_scrim_bottom_center">#32000000</color>
+
+    <color name="white">#FFFFFFFF</color>
 </resources>
