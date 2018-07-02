@@ -1,30 +1,18 @@
 package com.example.xyzreader.ui;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.graphics.Palette;
-import android.text.Html;
 import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +20,20 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -170,13 +166,20 @@ public class ArticleDetailFragment extends Fragment implements
             articleTitleView.setText(title);
             final TextView articleBylineView = mRootView.findViewById(R.id.article_byline);
             articleBylineView.setText(date);
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(thumbURL, new ImageLoader.ImageListener() {
+            ImageView smallImage = mRootView.findViewById(R.id.article_thumb);
+            Glide.with(this)
+                    .asBitmap()
+                    .load(thumbURL)
+                    .listener(new RequestListener<Bitmap>() {
                         @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            Bitmap bitmap = imageContainer.getBitmap();
-                            if (bitmap != null) {
-                                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            if (resource != null) {
+                                Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(@NonNull Palette palette) {
                                         mMutedColor = palette.getDominantColor(
@@ -192,16 +195,12 @@ public class ArticleDetailFragment extends Fragment implements
                                         }
                                     }
                                 });
-                                ImageView smallImage = mRootView.findViewById(R.id.article_thumb);
-                                smallImage.setImageBitmap(bitmap);
+                                return false;
                             }
+                            return false;
                         }
-
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-
-                        }
-                    });
+                    })
+                    .into(smallImage);
         } else {
             mRootView.setVisibility(View.GONE);
             bodyView.loadData("N/A", null, null);
